@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101735">
+  <title>NEXPLORA '26 | School Registration</title>
+  <style>
+    :root { --navy:#101735; --blue:#3559e8; --cyan:#4de0d0; --ink:#172033; --muted:#667085; --line:#dce2ee; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; font-family:Inter,Segoe UI,Arial,sans-serif; color:var(--ink);
+      background:radial-gradient(circle at 10% 10%, #dfe8ff 0, transparent 35%), linear-gradient(135deg,#f7f9ff,#eef2fa); }
+    .hero { background:linear-gradient(120deg,#101735,#1b2c69 65%,#234fc4); color:#fff; padding:42px 20px 78px; position:relative; overflow:hidden; }
+    .hero:after { content:""; position:absolute; width:330px;height:330px;border:1px solid #ffffff25;border-radius:50%;right:-70px;top:-150px;box-shadow:0 0 0 35px #ffffff0a,0 0 0 75px #ffffff08; }
+    .hero-inner { max-width:980px; margin:auto; position:relative; z-index:1; }
+    .eyebrow { display:inline-block; padding:7px 12px; border:1px solid #ffffff55; border-radius:99px; color:#a8fff3; letter-spacing:2px; font-size:12px; font-weight:800; }
+    h1 { font-size:clamp(38px,7vw,68px); letter-spacing:-2px; margin:18px 0 8px; line-height:1; }
+    h1 span { color:var(--cyan); }
+    .hero p { max-width:650px; color:#e1e8ff; font-size:17px; line-height:1.6; margin-bottom:0; }
+    main { max-width:850px; margin:-42px auto 48px; padding:0 18px; position:relative; z-index:2; }
+    .card { background:#fff; border:1px solid #e5e9f2; border-radius:22px; box-shadow:0 18px 55px #172b5b18; padding:clamp(22px,5vw,42px); }
+    .form-title { margin:0 0 8px; font-size:25px; }
+    .sub { margin:0 0 28px; color:var(--muted); line-height:1.5; }
+    .grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .field { display:flex; flex-direction:column; gap:8px; }
+    .wide { grid-column:1/-1; }
+    label { font-size:14px; font-weight:700; }
+    .required { color:#d92d20; }
+    input,textarea { width:100%; border:1px solid var(--line); border-radius:11px; padding:14px 15px; font:inherit; color:var(--ink); background:#fff; outline:none; transition:border .15s,box-shadow .15s; }
+    input:focus,textarea:focus { border-color:var(--blue); box-shadow:0 0 0 4px #3559e81a; }
+    textarea { min-height:110px; resize:vertical; }
+    .hint { font-size:12px; color:var(--muted); }
+    .submit { border:0; width:100%; border-radius:12px; margin-top:25px; padding:16px 20px; font:inherit; font-weight:800; color:#fff; cursor:pointer; background:linear-gradient(100deg,var(--blue),#243cb4); box-shadow:0 8px 18px #3559e833; }
+    .submit:hover { filter:brightness(1.06); transform:translateY(-1px); }
+    .submit:disabled { opacity:.65; cursor:wait; transform:none; }
+    .status { display:none; margin-top:18px; padding:14px 16px; border-radius:11px; line-height:1.5; font-size:14px; }
+    .status.success { display:block; background:#eafaf1; color:#17633a; border:1px solid #b8ebcc; }
+    .status.error { display:block; background:#fff0ef; color:#9b1c16; border:1px solid #ffd0cc; }
+    .footer { text-align:center; color:#68738b; font-size:12px; padding:0 20px 30px; }
+    .footer strong { color:#35415b; }
+    .trap { position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden; }
+    @media(max-width:620px) { .grid { grid-template-columns:1fr; } .wide { grid-column:auto; } .hero { padding-top:32px; } }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">SCHOOL REGISTRATION</div>
+      <h1>NEXPLORA <span>'26</span></h1>
+      <p>Register your school for NEXPLORA '26 at Naipunnya School of Management, Cherthala. Please provide the details of your school and its coordinating representative.</p>
+    </div>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2 class="form-title">School Registration Form</h2>
+      <p class="sub">Fields marked <span class="required">*</span> are required. Please check the contact details before submitting.</p>
+
+      <form id="registrationForm">
+        <!-- Replace the placeholder below with your deployed Google Apps Script Web App URL. -->
+        <input type="hidden" id="scriptUrl" value="PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE">
+
+        <div class="grid">
+          <div class="field wide">
+            <label for="schoolName">Name of School <span class="required">*</span></label>
+            <input id="schoolName" name="schoolName" type="text" maxlength="180" autocomplete="organization" required placeholder="Enter the full name of the school">
+          </div>
+
+          <div class="field wide">
+            <label for="schoolAddress">School Address <span class="required">*</span></label>
+            <textarea id="schoolAddress" name="schoolAddress" maxlength="600" autocomplete="street-address" required placeholder="Building / street, place, district, PIN code"></textarea>
+          </div>
+
+          <div class="field">
+            <label for="coordinatorName">Coordinator Name <span class="required">*</span></label>
+            <input id="coordinatorName" name="coordinatorName" type="text" maxlength="120" autocomplete="name" required placeholder="Full name">
+          </div>
+
+          <div class="field">
+            <label for="designation">Coordinator Designation <span class="required">*</span></label>
+            <input id="designation" name="designation" type="text" maxlength="120" required placeholder="e.g. Teacher, HOD, Principal">
+          </div>
+
+          <div class="field">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input id="email" name="email" type="email" maxlength="180" autocomplete="email" required placeholder="name@school.edu">
+          </div>
+
+          <div class="field">
+            <label for="mobile">Mobile Number <span class="required">*</span></label>
+            <input id="mobile" name="mobile" type="tel" maxlength="20" autocomplete="tel" inputmode="tel" pattern="[0-9+() .-]{7,20}" required placeholder="Contact mobile number">
+            <span class="hint">Include country code if applicable.</span>
+          </div>
+        </div>
+
+        <!-- Honeypot field to deter basic automated spam. Keep empty. -->
+        <div class="trap" aria-hidden="true">
+          <label for="website">Leave this field empty</label>
+          <input id="website" name="website" type="text" tabindex="-1" autocomplete="off">
+        </div>
+
+        <button class="submit" id="submitButton" type="submit">Submit School Registration →</button>
+        <div id="status" class="status" role="status" aria-live="polite"></div>
+      </form>
+    </section>
+  </main>
+
+  <div class="footer"><strong>NEXPLORA '26</strong> · Naipunnya School of Management, Cherthala</div>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    const button = document.getElementById('submitButton');
+    const statusBox = document.getElementById('status');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      statusBox.className = 'status';
+      statusBox.textContent = '';
+
+      const scriptUrl = document.getElementById('scriptUrl').value.trim();
+      if (!scriptUrl || scriptUrl.includes('PASTE_YOUR_GOOGLE_APPS_SCRIPT')) {
+        statusBox.className = 'status error';
+        statusBox.textContent = 'The form is not connected to Google Sheets yet. Please ask the event administrator to finish the setup.';
+        return;
+      }
+
+      if (document.getElementById('website').value) return;
+
+      button.disabled = true;
+      button.textContent = 'Submitting…';
+
+      try {
+        const formData = new FormData(form);
+        formData.delete('website');
+        formData.delete('scriptUrl');
+
+        // Apps Script web apps commonly require no-cors from a GitHub Pages origin.
+        // The response is opaque, so this confirms the request was sent, not independently verified.
+        await fetch(scriptUrl, { method: 'POST', body: new URLSearchParams(formData), mode: 'no-cors' });
+
+        statusBox.className = 'status success';
+        statusBox.textContent = 'Your registration request has been sent. Please contact the event team if you do not receive an acknowledgement.';
+        form.reset();
+      } catch (error) {
+        statusBox.className = 'status error';
+        statusBox.textContent = 'We could not send the form. Please check your internet connection and try again, or contact the event team.';
+      } finally {
+        button.disabled = false;
+        button.textContent = 'Submit School Registration →';
+      }
+    });
+  </script>
+</body>
+</html>
